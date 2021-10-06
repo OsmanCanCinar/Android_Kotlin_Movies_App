@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.osmancancinar.moviesapp.data.Movie" />
+
+        <variable
+            name="listener"
+            type="com.osmancancinar.moviesapp.adapter.MovieClickListener" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="172dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="@{listener::onMovieClicked}">
+
+        <ImageView
+            android:id="@+id/movie_image"
+            android:layout_width="120dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/movie_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@{movie.title}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/movie_image"
+            app:layout_constraintTop_toBottomOf="@+id/movie_rating" />
+
+        <TextView
+            android:id="@+id/movie_rating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|end"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="italic"
+            android:text="@{String.valueOf(movie.vote_average)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/movie_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/movie_id_dummy_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@{String.valueOf(movie.id)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
