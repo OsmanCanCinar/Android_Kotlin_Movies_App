@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,10 +16,6 @@ class MovieDetailFragment : Fragment() {
     private lateinit var binding: FragmentMovieDetailBinding
     private lateinit var viewModel: MovieDetailViewModel
     private var movie_id = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMovieDetailBinding.inflate(LayoutInflater.from(context), container, false)
@@ -33,7 +30,7 @@ class MovieDetailFragment : Fragment() {
         }
 
         viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel::class.java)
-        viewModel.getDataFromSQLite(movie_id,view,binding.movieBanner)
+        viewModel.getDataFromSQLite(movie_id,view,binding.movieBanner,binding.movieBackground)
         observeLiveData()
 
     }

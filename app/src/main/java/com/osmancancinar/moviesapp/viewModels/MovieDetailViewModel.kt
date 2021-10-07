@@ -14,7 +14,7 @@ class MovieDetailViewModel(application: Application) : BaseViewModel(application
 
     val movieLiveData = MutableLiveData<Movie>()
 
-    fun getDataFromSQLite(movieId: Int, view: View, movieImage: ImageView) {
+    fun getDataFromSQLite(movieId: Int, view: View, movieImage: ImageView, movieBackgroundImage: ImageView) {
         launch {
             val dao = MovieDatabase(getApplication()).movieDao()
             val movie = dao.getSelectedMovie(movieId)
@@ -24,6 +24,11 @@ class MovieDetailViewModel(application: Application) : BaseViewModel(application
                 .load("https://image.tmdb.org/t/p/w342${movie.poster_path}")
                 .transform(CenterCrop())
                 .into(movieImage)
+
+            Glide.with(view)
+                .load("https://image.tmdb.org/t/p/w342${movie.backdropPath}")
+                .transform(CenterCrop())
+                .into(movieBackgroundImage)
         }
     }
 }

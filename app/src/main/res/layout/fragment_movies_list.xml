@@ -7,7 +7,7 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"
+        android:background="@color/accent"
         tools:context=".ui.MoviesListFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,11 @@
                 android:paddingStart="8dp"
                 android:paddingTop="16dp"
                 android:paddingEnd="8dp"
-                android:paddingBottom="16dp" />
+                android:paddingBottom="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/list_error_msg"

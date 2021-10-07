@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,10 +20,6 @@ class MoviesListFragment : Fragment() {
     private lateinit var viewModel: MoviesListViewModel
     private var moviesAdapter = MoviesAdapter(arrayListOf())
     private val disposable = CompositeDisposable()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
