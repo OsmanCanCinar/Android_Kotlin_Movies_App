@@ -16,7 +16,8 @@ class MovieMapper {
             movie.poster_path,
             movie.backdropPath,
             movie.vote_average,
-            movie.release_date
+            movie.release_date,
+            movie.original_language
         )
     }
 }

@@ -101,6 +101,20 @@
                     tools:text="February 16, 1996 " />
 
                 <TextView
+                    android:id="@+id/movie_language_fetched"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|end"
+                    android:textColor="@color/ratingColor"
+                    android:textStyle="italic"
+                    android:textSize="20sp"
+                    android:text="@{String.valueOf(selectedMovie.original_language)}"
+                    tools:text="EN"
+                    app:layout_constraintStart_toEndOf="@+id/movie_release_date_fetched"
+                    app:layout_constraintEnd_toStartOf="@id/movie_vote_average_fetched"
+                    app:layout_constraintBottom_toBottomOf="@id/movie_vote_average_fetched"/>
+
+                <TextView
                     android:id="@+id/movie_vote_average_fetched"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -142,6 +156,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:baselineAlignBottom="false"

@@ -1,6 +1,8 @@
 package com.osmancancinar.moviesapp.viewModels
 
+import android.app.Activity
 import android.app.Application
+import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +16,7 @@ class MovieDetailViewModel(application: Application) : BaseViewModel(application
 
     val movieLiveData = MutableLiveData<Movie>()
 
-    fun getDataFromSQLite(movieId: Int, view: View, movieImage: ImageView, movieBackgroundImage: ImageView) {
+    fun setMovieDataFromSQLite(movieId: Int, view: View, movieImage: ImageView, movieBackgroundImage: ImageView) {
         launch {
             val dao = MovieDatabase(getApplication()).movieDao()
             val movie = dao.getSelectedMovie(movieId)
@@ -30,5 +32,14 @@ class MovieDetailViewModel(application: Application) : BaseViewModel(application
                 .transform(CenterCrop())
                 .into(movieBackgroundImage)
         }
+    }
+
+    fun shareData(movieTitle: String, activity: Activity) {
+        val  intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_TEXT,movieTitle)
+        intent.type =  "text/plain"
+        activity.startActivity(Intent.createChooser(intent,"Share to : "))
+
     }
 }

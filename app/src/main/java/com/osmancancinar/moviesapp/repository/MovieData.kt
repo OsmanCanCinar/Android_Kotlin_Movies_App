@@ -23,5 +23,8 @@ data class MovieData(
     val vote_average: Float,
 
     @SerializedName("release_date")
-    val release_date: String
+    val release_date: String,
+
+    @SerializedName("original_language")
+    val original_language: String
 )

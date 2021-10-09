@@ -19,13 +19,6 @@ class MoviesAdapter(private val movies: ArrayList<Movie>) : RecyclerView.Adapter
     class MovieViewHolder(var binding: MovieRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            binding.apply {
-                /*
-                movieTitle.text = movie.title
-                movieRating.text = movie.vote_average.toString()
-                movieIdDummyText.text = movie.id.toString()
-                */
-            }
 
             Glide.with(binding.root)
                 .load("https://image.tmdb.org/t/p/w342${movie.poster_path}")
@@ -59,8 +52,9 @@ class MoviesAdapter(private val movies: ArrayList<Movie>) : RecyclerView.Adapter
     }
 
     override fun onMovieClicked(view: View) {
-        val movie_id = view.movie_id_dummy_text.text.toString().toInt()
-        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(movie_id)
+        val movieId = view.movie_id_dummy_text.text.toString().toInt()
+        val movieTitle = view.movie_title.text.toString()
+        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(movieId,movieTitle)
         Navigation.findNavController(view).navigate(action)
     }
 }

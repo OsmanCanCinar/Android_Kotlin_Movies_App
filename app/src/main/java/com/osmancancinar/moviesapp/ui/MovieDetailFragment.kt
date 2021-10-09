@@ -10,14 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.osmancancinar.moviesapp.databinding.FragmentMovieDetailBinding
 import com.osmancancinar.moviesapp.viewModels.MovieDetailViewModel
+import kotlinx.android.synthetic.main.movie_row.*
 
 class MovieDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailBinding
     private lateinit var viewModel: MovieDetailViewModel
-    private var movie_id = 0
+    private var movieId = 0
+    private var movieTitle = ""
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentMovieDetailBinding.inflate(LayoutInflater.from(context), container, false)
         return binding.root
     }
@@ -26,11 +32,21 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            movie_id = MovieDetailFragmentArgs.fromBundle(it).movieId
+            movieId = MovieDetailFragmentArgs.fromBundle(it).movieId
+            movieTitle = MovieDetailFragmentArgs.fromBundle(it).movieTitle
+        }
+
+        binding.fabShare.setOnClickListener {
+            viewModel.shareData(movieTitle,requireActivity())
         }
 
         viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel::class.java)
-        viewModel.getDataFromSQLite(movie_id,view,binding.movieBanner,binding.movieBackground)
+        viewModel.setMovieDataFromSQLite(
+            movieId,
+            view,
+            binding.movieBanner,
+            binding.movieBackground
+        )
         observeLiveData()
 
     }

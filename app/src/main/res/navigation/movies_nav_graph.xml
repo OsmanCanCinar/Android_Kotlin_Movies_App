@@ -16,6 +16,8 @@
         <argument
             android:name="movie_id"
             app:argType="integer" />
+        <argument android:name="movieTitle"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/moviesListFragment"

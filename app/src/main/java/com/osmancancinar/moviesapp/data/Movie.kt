@@ -26,7 +26,10 @@ data class Movie(
     val vote_average: Float,
 
     @ColumnInfo(name = "release_date")
-    val release_date: String
+    val release_date: String,
+
+    @ColumnInfo(name = "original_language")
+    val original_language: String
 ) {
 
     @PrimaryKey(autoGenerate = true)

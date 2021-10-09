@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.osmancancinar.moviesapp.adapter.MoviesAdapter
 import com.osmancancinar.moviesapp.databinding.FragmentMoviesListBinding
@@ -38,6 +39,7 @@ class MoviesListFragment : Fragment() {
 
         binding.moviesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
+            //layoutManager = GridLayoutManager(context,2)
             adapter = moviesAdapter
         }
 
