@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.osmancancinar.moviesapp.adapter.MoviesAdapter
 import com.osmancancinar.moviesapp.databinding.FragmentMoviesListBinding
 import com.osmancancinar.moviesapp.viewModels.MoviesListViewModel
@@ -19,14 +20,11 @@ class MoviesListFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesListBinding
     private lateinit var viewModel: MoviesListViewModel
-    private var moviesAdapter = MoviesAdapter(arrayListOf())
+    private  var moviesAdapter = MoviesAdapter(arrayListOf())
     private val disposable = CompositeDisposable()
+    private var popularMoviesPage = 1
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMoviesListBinding.inflate(LayoutInflater.from(context), container, false)
         return binding.root
     }
@@ -35,12 +33,11 @@ class MoviesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(MoviesListViewModel::class.java)
-        viewModel.refreshData()
+        viewModel.refreshData(popularMoviesPage)
 
         binding.moviesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            //layoutManager = GridLayoutManager(context,2)
-            adapter = moviesAdapter
+            adapter =  moviesAdapter
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -49,9 +46,23 @@ class MoviesListFragment : Fragment() {
                 listErrorMsg.visibility = View.GONE
                 progressBarList.visibility = View.INVISIBLE
             }
-            viewModel.refreshFromAPI()
+            viewModel.refreshFromAPI(popularMoviesPage)
             binding.swipeRefreshLayout.isRefreshing = false
         }
+
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            ) {
+                var value = parent?.getItemAtPosition(position)
+                popularMoviesPage = value.toString().toInt()
+                viewModel.refreshFromAPI(popularMoviesPage)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
         observeLiveData()
     }
 

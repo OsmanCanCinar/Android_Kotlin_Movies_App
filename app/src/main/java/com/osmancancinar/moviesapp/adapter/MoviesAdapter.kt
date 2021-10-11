@@ -17,9 +17,7 @@ import kotlinx.android.synthetic.main.movie_row.view.*
 class MoviesAdapter(private val movies: ArrayList<Movie>) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>(), MovieClickListener {
 
     class MovieViewHolder(var binding: MovieRowBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(movie: Movie) {
-
             Glide.with(binding.root)
                 .load("https://image.tmdb.org/t/p/w342${movie.poster_path}")
                 .transform(CenterCrop())

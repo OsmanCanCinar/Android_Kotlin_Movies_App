@@ -17,9 +17,9 @@ class MovieAPIServices(
         .build()
         .create(MovieAPI::class.java)
 
-    fun getPopularMovies(): Single<List<Movie>> {
+    fun getPopularMovies(page: Int): Single<List<Movie>> {
         return movieAPI
-            .getPopularMovies()
+            .getPopularMovies("a384ed1c46e3eba8b7f11f883eb0b7cf","en-US",page)
             .map { result ->
                 movieMapper.mapMovieDataToMovieObjects(result.movies)
             }

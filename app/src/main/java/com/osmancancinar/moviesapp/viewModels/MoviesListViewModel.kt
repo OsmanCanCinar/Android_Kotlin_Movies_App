@@ -14,6 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 
 class MoviesListViewModel(application: Application) : BaseViewModel(application) {
 
@@ -27,29 +28,29 @@ class MoviesListViewModel(application: Application) : BaseViewModel(application)
     val moviesLoading = MutableLiveData<Boolean>()
     val movies: LiveData<List<Movie>> get() = movieObjects
 
-    fun refreshData() {
+    fun refreshData(page: Int) {
         val updateTime = customPreferences.getTime()
         if ((updateTime != null) && (updateTime != 0L) && ((System.nanoTime() - updateTime) < refreshTime)) {
             getDataFromSQLite()
         } else {
-           getPopularMoviesFromAPI()
+           getPopularMoviesFromAPI(page)
         }
     }
 
-    fun refreshFromAPI() {
-        getPopularMoviesFromAPI()
+    fun refreshFromAPI(page: Int) {
+        getPopularMoviesFromAPI(page)
     }
 
-    fun getPopularMoviesFromAPI() {
+    fun getPopularMoviesFromAPI(page: Int) {
         moviesLoading.value = true
         disposable.add(
             movieAPIServices
-                .getPopularMovies()
+                .getPopularMovies(page)
                 .subscribeOn(Schedulers.io()) //newThread() is fine as well.
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { movies ->
-                        movieObjects.value = movies
+                        //movieObjects.value = movies
                         storeDataInSQLite(movies)
                         Toast.makeText(getApplication(), "Movies From API", Toast.LENGTH_SHORT).show()
                     },
@@ -70,7 +71,7 @@ class MoviesListViewModel(application: Application) : BaseViewModel(application)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { movies ->
-                        movieObjects.value = movies
+                        //movieObjects.value = movies
                         storeDataInSQLite(movies)
                         Toast.makeText(getApplication(), "Movies From API", Toast.LENGTH_SHORT).show()
                     },
