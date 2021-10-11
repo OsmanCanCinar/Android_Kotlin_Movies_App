@@ -14,7 +14,8 @@ import com.osmancancinar.moviesapp.databinding.MovieRowBinding
 import com.osmancancinar.moviesapp.ui.MoviesListFragmentDirections
 import kotlinx.android.synthetic.main.movie_row.view.*
 
-class MoviesAdapter(private val movies: ArrayList<Movie>) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>(), MovieClickListener {
+class MoviesAdapter(private val movies: ArrayList<Movie>) :
+    RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>(), MovieClickListener {
 
     class MovieViewHolder(var binding: MovieRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
@@ -25,11 +26,15 @@ class MoviesAdapter(private val movies: ArrayList<Movie>) : RecyclerView.Adapter
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesAdapter.MovieViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MoviesAdapter.MovieViewHolder {
         val binding = DataBindingUtil.inflate<MovieRowBinding>(
             LayoutInflater.from(parent.context),
             R.layout.movie_row,
-            parent, false)
+            parent, false
+        )
         return MovieViewHolder(binding)
     }
 
@@ -52,7 +57,10 @@ class MoviesAdapter(private val movies: ArrayList<Movie>) : RecyclerView.Adapter
     override fun onMovieClicked(view: View) {
         val movieId = view.movie_id_dummy_text.text.toString().toInt()
         val movieTitle = view.movie_title.text.toString()
-        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(movieId,movieTitle)
+        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailFragment(
+            movieId,
+            movieTitle
+        )
         Navigation.findNavController(view).navigate(action)
     }
 }

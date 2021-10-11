@@ -28,7 +28,7 @@ class MovieDetailViewModel(application: Application) : BaseViewModel(application
                 .into(movieImage)
 
             Glide.with(view)
-                .load("https://image.tmdb.org/t/p/w342${movie.backdropPath}")
+                .load("https://image.tmdb.org/t/p/original${movie.backdropPath}")
                 .transform(CenterCrop())
                 .into(movieBackgroundImage)
         }

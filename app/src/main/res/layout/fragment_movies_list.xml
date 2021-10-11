@@ -15,16 +15,40 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/categories_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category"
+                android:layout_marginStart="30dp"
+                android:textColor="@color/ratingColor"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@id/spinner"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Spinner
+                android:id="@+id/spinner_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:entries="@array/categories"
+                android:textSize="14sp"
+                android:background="@color/primary"
+                android:popupBackground="@color/primary"
+                app:layout_constraintStart_toEndOf="@id/categories_text"
+                app:layout_constraintBottom_toBottomOf="@id/spinner" />
+
+            <TextView
                 android:id="@+id/page_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 android:text="@string/current_page"
                 android:textColor="@color/ratingColor"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="@id/spinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/spinner_categories" />
 
             <Spinner
                 android:id="@+id/spinner"

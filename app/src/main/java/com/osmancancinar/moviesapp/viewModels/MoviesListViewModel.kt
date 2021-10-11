@@ -1,8 +1,6 @@
 package com.osmancancinar.moviesapp.viewModels
 
 import android.app.Application
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.osmancancinar.moviesapp.data.Movie
@@ -14,7 +12,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import kotlin.math.absoluteValue
 
 class MoviesListViewModel(application: Application) : BaseViewModel(application) {
 
@@ -28,17 +25,21 @@ class MoviesListViewModel(application: Application) : BaseViewModel(application)
     val moviesLoading = MutableLiveData<Boolean>()
     val movies: LiveData<List<Movie>> get() = movieObjects
 
-    fun refreshData(page: Int) {
+    fun refreshData(page: Int, category: String) {
         val updateTime = customPreferences.getTime()
         if ((updateTime != null) && (updateTime != 0L) && ((System.nanoTime() - updateTime) < refreshTime)) {
             getDataFromSQLite()
         } else {
-           getPopularMoviesFromAPI(page)
+           refreshFromAPI(page,category)
         }
     }
 
-    fun refreshFromAPI(page: Int) {
-        getPopularMoviesFromAPI(page)
+    fun refreshFromAPI(page: Int, category: String) {
+        if(category == "Popular") {
+            getPopularMoviesFromAPI(page)
+        } else if (category == "Top Rated") {
+            getTopRatedMoviesFromAPI(page)
+        }
     }
 
     fun getPopularMoviesFromAPI(page: Int) {
@@ -46,36 +47,34 @@ class MoviesListViewModel(application: Application) : BaseViewModel(application)
         disposable.add(
             movieAPIServices
                 .getPopularMovies(page)
-                .subscribeOn(Schedulers.io()) //newThread() is fine as well.
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { movies ->
-                        //movieObjects.value = movies
-                        storeDataInSQLite(movies)
-                        Toast.makeText(getApplication(), "Movies From API", Toast.LENGTH_SHORT).show()
-                    },
-                    { throwable ->
-                        moviesError.value = true
-                        moviesLoading.value = false
-                        Log.e("MoviesFromAPI", "onError:", throwable) }
-                )
-        )
-    }
-
-    fun getTopRatedMoviesFromAPI() {
-        moviesLoading.value = true
-        disposable.add(
-            movieAPIServices
-                .getTopRatedMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { movies ->
                         //movieObjects.value = movies
                         storeDataInSQLite(movies)
-                        Toast.makeText(getApplication(), "Movies From API", Toast.LENGTH_SHORT).show()
                     },
-                    { throwable -> Log.e("MoviesFromAPI", "onError:", throwable) }
+                    { _ ->
+                        moviesError.value = true
+                        moviesLoading.value = false }
+                )
+        )
+    }
+
+    fun getTopRatedMoviesFromAPI(page: Int) {
+        moviesLoading.value = true
+        disposable.add(
+            movieAPIServices
+                .getTopRatedMovies(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { movies ->
+                        storeDataInSQLite(movies)
+                    },
+                    { _ ->
+                        moviesError.value = true
+                        moviesLoading.value = false }
                 )
         )
     }
@@ -85,7 +84,6 @@ class MoviesListViewModel(application: Application) : BaseViewModel(application)
         launch {
             val movies = MovieDatabase(getApplication()).movieDao().getAllMovies()
             showMovies(movies)
-            Toast.makeText(getApplication(), "Movies From SQLite", Toast.LENGTH_SHORT).show()
         }
     }
 

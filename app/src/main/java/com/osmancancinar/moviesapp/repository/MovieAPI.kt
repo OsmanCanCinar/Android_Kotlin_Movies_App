@@ -15,9 +15,8 @@ interface MovieAPI {
 
     @GET("movie/top_rated")
     fun getTopRatedMovies(
-        @Query("api_key") api_key: String = "a384ed1c46e3eba8b7f11f883eb0b7cf",
-        @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1
+        @Query("api_key") api_key: String,
+        @Query("language") language: String,
+        @Query("page") page: Int
     ): Single<MoviesResponse>
-
 }
