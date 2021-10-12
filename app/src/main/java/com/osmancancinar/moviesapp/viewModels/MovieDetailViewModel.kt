@@ -2,7 +2,12 @@ package com.osmancancinar.moviesapp.viewModels
 
 import android.app.Activity
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
@@ -40,6 +45,5 @@ class MovieDetailViewModel(application: Application) : BaseViewModel(application
         intent.putExtra(Intent.EXTRA_TEXT,movieTitle)
         intent.type =  "text/plain"
         activity.startActivity(Intent.createChooser(intent,"Share to : "))
-
     }
 }
