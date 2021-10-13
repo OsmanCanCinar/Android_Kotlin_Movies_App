@@ -19,11 +19,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/category"
-                android:layout_marginStart="30dp"
                 android:textColor="@color/ratingColor"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="@id/spinner"
+                app:layout_constraintEnd_toStartOf="@id/spinner_categories"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
@@ -31,35 +32,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:entries="@array/categories"
-                android:textSize="14sp"
                 android:background="@color/primary"
+                android:entries="@array/categories"
                 android:popupBackground="@color/primary"
-                app:layout_constraintStart_toEndOf="@id/categories_text"
-                app:layout_constraintBottom_toBottomOf="@id/spinner" />
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/spinner"
+                app:layout_constraintEnd_toStartOf="@id/page_text"
+                app:layout_constraintStart_toEndOf="@id/categories_text" />
 
             <TextView
                 android:id="@+id/page_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
                 android:text="@string/current_page"
                 android:textColor="@color/ratingColor"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="@id/spinner"
+                app:layout_constraintEnd_toStartOf="@id/spinner"
                 app:layout_constraintStart_toEndOf="@id/spinner_categories" />
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:entries="@array/items"
-                android:textSize="14sp"
                 android:background="@color/primary"
+                android:entries="@array/items"
                 android:popupBackground="@color/primary"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/page_text"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,12 +69,10 @@
                 android:id="@+id/movies_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:clipToPadding="false"
-                android:paddingStart="8dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="16dp"
                 android:layout_marginTop="5dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

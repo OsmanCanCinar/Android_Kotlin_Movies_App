@@ -3,6 +3,7 @@ package com.osmancancinar.moviesapp.viewModels
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.osmancancinar.moviesapp.R
 import com.osmancancinar.moviesapp.data.Movie
 import com.osmancancinar.moviesapp.data.MovieDatabase
 import com.osmancancinar.moviesapp.repository.MovieAPIServices
@@ -13,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 
-class MoviesListViewModel(application: Application) : BaseViewModel(application) {
+class MoviesListViewModel(private val app: Application) : BaseViewModel(app) {
 
     private val disposable = CompositeDisposable()
     private val mapper = MovieMapper()
@@ -30,14 +31,14 @@ class MoviesListViewModel(application: Application) : BaseViewModel(application)
         if ((updateTime != null) && (updateTime != 0L) && ((System.nanoTime() - updateTime) < refreshTime)) {
             getDataFromSQLite()
         } else {
-           refreshFromAPI(page,category)
+            refreshFromAPI(page, category)
         }
     }
 
     fun refreshFromAPI(page: Int, category: String) {
-        if(category == "Popular") {
+        if (category == app.getString(R.string.en_arr_1)) {
             getPopularMoviesFromAPI(page)
-        } else if (category == "Top Rated") {
+        } else if (category == app.getString(R.string.en_arr_2)) {
             getTopRatedMoviesFromAPI(page)
         }
     }
@@ -56,7 +57,8 @@ class MoviesListViewModel(application: Application) : BaseViewModel(application)
                     },
                     { _ ->
                         moviesError.value = true
-                        moviesLoading.value = false }
+                        moviesLoading.value = false
+                    }
                 )
         )
     }
@@ -74,7 +76,8 @@ class MoviesListViewModel(application: Application) : BaseViewModel(application)
                     },
                     { _ ->
                         moviesError.value = true
-                        moviesLoading.value = false }
+                        moviesLoading.value = false
+                    }
                 )
         )
     }

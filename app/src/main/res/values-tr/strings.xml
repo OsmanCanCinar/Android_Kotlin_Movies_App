@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movies App</string>
+    <string name="error_try_again">Hata, Lütfen tekrar deneyin!</string>
+    <string name="current_page">Sayfa :</string>
+    <string name="category">Kategori :</string>
+    <string name="notification_msg">Sinemaya gitmeden önce onlarca film hakkında bilgi sahibi olabilirsiniz!</string>
+    <string name="notification_tip">Tüyo</string>
+    <string name="popular">popular</string>
+    <string name="share_to">Paylaş"</string>
+    <string name="en_arr_1">Popüler</string>
+    <string name="en_arr_2">En çok oy alan</string>
+    <string name="movie_details">Film Detayları</string>
+    <string name="movies_page">Filmler</string>
+    <string name="release_date">Yayın tarihi : </string>
+    <string name="language">Dil :</string>
+    <string name="check_out">Bu filme bir bak, </string>
+
+    <string-array name="items">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Popüler</item>
+        <item>En çok oy alan</item>
+    </string-array>
+
+</resources>

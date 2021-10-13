@@ -3,7 +3,17 @@
     <string name="error_try_again">Error, Please Try again!</string>
     <string name="current_page">Current Page :</string>
     <string name="category">Category :</string>
-    <string name="language">en-US</string>
+    <string name="notification_msg">You can explore lots of movies and be informed before going to theater!</string>
+    <string name="notification_tip">Tip</string>
+    <string name="popular">popular</string>
+    <string name="share_to">Share to </string>
+    <string name="en_arr_1">Popular</string>
+    <string name="en_arr_2">Top Rated</string>
+    <string name="movie_details">Movie Details</string>
+    <string name="movies_page">Movies</string>
+    <string name="release_date">Release date : </string>
+    <string name="language">Language :</string>
+    <string name="check_out">Check this movie out, </string>
 
     <string-array name="items">
         <item>1</item>
@@ -18,4 +28,5 @@
         <item>Popular</item>
         <item>Top Rated</item>
     </string-array>
+
 </resources>

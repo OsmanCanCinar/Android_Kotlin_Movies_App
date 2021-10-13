@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.osmancancinar.moviesapp.R
 import com.osmancancinar.moviesapp.adapter.MoviesAdapter
 import com.osmancancinar.moviesapp.databinding.FragmentMoviesListBinding
 import com.osmancancinar.moviesapp.viewModels.MoviesListViewModel
@@ -19,10 +20,10 @@ class MoviesListFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesListBinding
     private lateinit var viewModel: MoviesListViewModel
-    private  var moviesAdapter = MoviesAdapter(arrayListOf())
+    private var moviesAdapter = MoviesAdapter(arrayListOf())
     private val disposable = CompositeDisposable()
     private var page = 1
-    private var genres = "popular"
+    private lateinit var genres: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMoviesListBinding.inflate(LayoutInflater.from(context), container, false)
@@ -32,12 +33,14 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        genres = getString(R.string.popular)
+
         viewModel = ViewModelProviders.of(this).get(MoviesListViewModel::class.java)
-        viewModel.refreshData(page,genres)
+        viewModel.refreshData(page, genres)
 
         binding.moviesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter =  moviesAdapter
+            adapter = moviesAdapter
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -46,35 +49,44 @@ class MoviesListFragment : Fragment() {
                 listErrorMsg.visibility = View.GONE
                 progressBarList.visibility = View.INVISIBLE
             }
-            viewModel.refreshFromAPI(page,genres)
+            viewModel.refreshFromAPI(page, genres)
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 var value = parent?.getItemAtPosition(position)
                 page = value.toString().toInt()
-                viewModel.refreshFromAPI(page,genres)
-                binding.moviesRecyclerView.layoutManager?.smoothScrollToPosition(binding.moviesRecyclerView,
-                    RecyclerView.State(),0)
+                viewModel.refreshFromAPI(page, genres)
+                binding.moviesRecyclerView.layoutManager?.smoothScrollToPosition(
+                    binding.moviesRecyclerView,
+                    RecyclerView.State(), 0
+                )
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
         binding.spinnerCategories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
-            ) {
-                var value = parent?.getItemAtPosition(position)
-                genres = value.toString()
-                binding.spinner.setSelection(0)
-                page = 1
-                viewModel.refreshFromAPI(page,genres)
-                binding.moviesRecyclerView.layoutManager?.smoothScrollToPosition(binding.moviesRecyclerView,
-                    RecyclerView.State(),0)
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                ) {
+                    var value = parent?.getItemAtPosition(position)
+                    genres = value.toString()
+                    binding.spinner.setSelection(0)
+                    page = 1
+                    viewModel.refreshFromAPI(page, genres)
+                    binding.moviesRecyclerView.layoutManager?.smoothScrollToPosition(
+                        binding.moviesRecyclerView,
+                        RecyclerView.State(), 0
+                    )
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
+
         observeLiveData()
     }
 
@@ -84,13 +96,13 @@ class MoviesListFragment : Fragment() {
                 binding.moviesRecyclerView.visibility = View.VISIBLE
                 moviesAdapter.updateMovieList(movies)
             }
-        } )
+        })
 
         viewModel.moviesError.observe(viewLifecycleOwner, Observer { error ->
             error?.let {
-                if (it){
+                if (it) {
                     binding.listErrorMsg.visibility = View.VISIBLE
-                } else{
+                } else {
                     binding.listErrorMsg.visibility = View.GONE
                 }
             }

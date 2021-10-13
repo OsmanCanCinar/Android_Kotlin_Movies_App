@@ -5,15 +5,23 @@ import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
-class MovieAPIServices(
-    private val movieMapper: MovieMapper
-) {
+class MovieAPIServices(private val movieMapper: MovieMapper) {
 
     private val BASE_URL = "https://api.themoviedb.org/3/"
     private val API_KEY = "a384ed1c46e3eba8b7f11f883eb0b7cf"
-    private val LANGUAGE = "en-US"
+    private lateinit var LANGUAGE: String
 
+    private fun checkLanguage(): String {
+        val currentLanguage = Locale.getDefault().language
+        if (currentLanguage == "tr") {
+            LANGUAGE = "tr-TR"
+        } else {
+            LANGUAGE = "en-US"
+        }
+        return LANGUAGE
+    }
 
     private val movieAPI = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -24,7 +32,7 @@ class MovieAPIServices(
 
     fun getPopularMovies(page: Int): Single<List<Movie>> {
         return movieAPI
-            .getPopularMovies(API_KEY, LANGUAGE, page)
+            .getPopularMovies(API_KEY, checkLanguage(), page)
             .map { result ->
                 movieMapper.mapMovieDataToMovieObjects(result.movies)
             }
@@ -32,7 +40,7 @@ class MovieAPIServices(
 
     fun getTopRatedMovies(page: Int): Single<List<Movie>> {
         return movieAPI
-            .getTopRatedMovies(API_KEY, LANGUAGE, page)
+            .getTopRatedMovies(API_KEY, checkLanguage(), page)
             .map { result ->
                 movieMapper.mapMovieDataToMovieObjects(result.movies)
             }

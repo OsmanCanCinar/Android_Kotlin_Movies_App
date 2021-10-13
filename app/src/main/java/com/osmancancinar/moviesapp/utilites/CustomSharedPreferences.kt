@@ -12,6 +12,7 @@ class CustomSharedPreferences {
         private val PREFERENCES_TIME = "preferences_time"
         private var sharedPreferences: SharedPreferences? = null
         private var lock = Any()
+
         @Volatile
         private var instance: CustomSharedPreferences? = null
 

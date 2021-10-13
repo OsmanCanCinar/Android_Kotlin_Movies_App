@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.osmancancinar.moviesapp.ui.MovieDetailFragment"
-        android:label="Movie Details"
+        android:label="@string/movie_details"
         tools:layout="@layout/fragment_movie_detail">
         <action
             android:id="@+id/action_movieDetailFragment_to_moviesListFragment"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/moviesListFragment"
         android:name="com.osmancancinar.moviesapp.ui.MoviesListFragment"
-        android:label="Movies"
+        android:label="@string/movies_page"
         tools:layout="@layout/fragment_movies_list">
         <action
             android:id="@+id/action_moviesListFragment_to_movieDetailFragment"

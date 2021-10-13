@@ -28,10 +28,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.sendNotification(this)
 
         navController = Navigation.findNavController(this, R.id.fragment)
-        NavigationUI.setupActionBarWithNavController(this,navController)
+        NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController,null)
+        return NavigationUI.navigateUp(navController, null)
     }
 }
