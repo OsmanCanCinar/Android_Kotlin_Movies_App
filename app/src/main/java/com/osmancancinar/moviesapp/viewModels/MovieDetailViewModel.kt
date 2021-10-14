@@ -82,7 +82,7 @@ class MovieDetailViewModel(private val app: Application) : BaseViewModel(app) {
 
     fun loadAd() {
         //myId: ca-app-pub-2607865011970564/2509682149
-        //TestId: ca-app-pub-3940256099942544/1033173712
+        //TestId:ca-app-pub-3940256099942544/1033173712
         var adRequest = AdRequest.Builder()
             .build()
         InterstitialAd.load(app.applicationContext,"ca-app-pub-2607865011970564/2509682149", adRequest, object : InterstitialAdLoadCallback() {

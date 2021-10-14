@@ -41,6 +41,10 @@ class MovieDetailFragment : Fragment() {
         }
 
         viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel::class.java)
+
+        viewModel.loadAd()
+        viewModel.callBackOfAd()
+
         viewModel.setMovieDataFromSQLite(
             movieId,
             view,
@@ -48,9 +52,6 @@ class MovieDetailFragment : Fragment() {
             binding.movieBackground
         )
         observeLiveData()
-
-        viewModel.loadAd()
-        viewModel.callBackOfAd()
 
         binding.fabShare.setOnClickListener {
             viewModel.shareData(movieTitle, requireActivity())
