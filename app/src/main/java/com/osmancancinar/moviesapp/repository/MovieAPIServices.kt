@@ -10,7 +10,7 @@ import java.util.*
 class MovieAPIServices(private val movieMapper: MovieMapper) {
 
     private val BASE_URL = "https://api.themoviedb.org/3/"
-    private val API_KEY = "a384ed1c46e3eba8b7f11f883eb0b7cf"
+    private val API_KEY = ""
     private lateinit var LANGUAGE: String
 
     private fun checkLanguage(): String {
